@@ -110,7 +110,5 @@ class RandoHandler(RaceHandler):
             flagstring=flags
         )
 
-        await self.send_message('GLHF!')
-
     def _race_in_progress(self):
         return self.data.get('status').get('value') in ('pending', 'in_progress')
