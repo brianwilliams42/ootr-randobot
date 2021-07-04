@@ -1,5 +1,5 @@
 from racetime_bot import RaceHandler, monitor_cmd, can_moderate, can_monitor
-
+import random
 
 class RandoHandler(RaceHandler):
     """
@@ -7,20 +7,18 @@ class RandoHandler(RaceHandler):
     """
     stop_at = ['cancelled', 'finished']
 
-    def __init__(self, zsr, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        # self.zsr = zsr
-        # self.presets = zsr.load_presets()
         self.seed_rolled = False
 
     def should_stop(self):
         return (
-            (
-                self.data.get('goal', {}).get('name') == 'Random settings league'
-                and not self.data.get('goal', {}).get('custom', False)
-            )
-            or super().should_stop()
+           # (
+           #     self.data.get('goal', {}).get('name') == 'Random settings league'
+           #     and not self.data.get('goal', {}).get('custom', False)
+           # )
+           # or
+           super().should_stop()
         )
 
     async def begin(self):
@@ -31,14 +29,7 @@ class RandoHandler(RaceHandler):
             return
         if not self.state.get('intro_sent') and not self._race_in_progress():
             await self.send_message(
-                'Welcome to OoTR! Create a seed with !seed <preset>'
-            )
-            await self.send_message(
-                'If no preset is selected, weekly settings will be used. '
-                'Use !spoilerseed to generate a seed with a spoiler log.'
-            )
-            await self.send_message(
-                'For a list of presets, use !presets'
+                'Welcome to DWR! Create a seed with !dwflags <flags>'
             )
             self.state['intro_sent'] = True
         if 'locked' not in self.state:
@@ -72,72 +63,25 @@ class RandoHandler(RaceHandler):
             'Lock released. Anyone may now roll a seed.'
         )
 
-    async def ex_seed(self, args, message):
+    @monitor_cmd
+    async def ex_dwflags(self, args, message):
         """
-        Handle !seed commands.
-        """
-        if self._race_in_progress():
-            return
-        await self.roll_and_send(args, message, True)
-
-    async def ex_spoilerseed(self, args, message):
-        """
-        Handle !race commands.
+        Handle !dwflags commands.
         """
         if self._race_in_progress():
             return
-        await self.roll_and_send(args, message, False)
+        await self.roll_and_send(args, message)
 
-    async def ex_presets(self, args, message):
+    async def roll_and_send(self, args, message):
         """
-        Handle !presets commands.
-        """
-        if self._race_in_progress():
-            return
-        await self.send_presets()
-
-    async def ex_fpa(self, args, message):
-        if len(args) == 1 and args[0] in ('on', 'off'):
-            if not can_monitor(message):
-                resp = 'Sorry %(reply_to)s, only race monitors can do that.'
-            elif args[0] == 'on':
-                if self.state['fpa']:
-                    resp = 'Fair play agreement is already activated.'
-                else:
-                    self.state['fpa'] = True
-                    resp = (
-                        'Fair play agreement is now active. @entrants may '
-                        'use the !fpa command during the race to notify of a '
-                        'crash. Race monitors should enable notifications '
-                        'using the bell 🔔 icon below chat.'
-                    )
-            else:  # args[0] == 'off'
-                if not self.state['fpa']:
-                    resp = 'Fair play agreement is not active.'
-                else:
-                    self.state['fpa'] = False
-                    resp = 'Fair play agreement is now deactivated.'
-        elif self.state['fpa']:
-            if self._race_in_progress():
-                resp = '@everyone FPA has been invoked by @%(reply_to)s.'
-            else:
-                resp = 'FPA cannot be invoked before the race starts.'
-        else:
-            resp = (
-                'Fair play agreement is not active. Race monitors may enable '
-                'FPA for this race with !fpa on'
-            )
-        if resp:
-            reply_to = message.get('user', {}).get('name', 'friend')
-            await self.send_message(resp % {'reply_to': reply_to})
-
-    async def roll_and_send(self, args, message, encrypt):
-        """
-        Read an incoming !seed or !race command, and generate a new seed if
+        Read an incoming !dwflags command, and generate a new seed if
         valid.
         """
         reply_to = message.get('user', {}).get('name')
 
+        if len(args) != 1:
+            await self.send_message('Hey, you forgot flags.')
+            return
         if self.state.get('locked') and not can_monitor(message):
             await self.send_message(
                 'Sorry %(reply_to)s, seed rolling is locked. Only race '
@@ -153,40 +97,20 @@ class RandoHandler(RaceHandler):
             return
 
         await self.roll(
-            preset=args[0] if args else 'weekly',
-            encrypt=encrypt,
+            flags=args[0] if args else 'weekly',
             reply_to=reply_to,
         )
 
-    async def roll(self, preset, encrypt, reply_to):
+    async def roll(self, flags, reply_to):
         """
-        Generate a seed and send it to the race room.
+        Roll a new seed and update the race info.
         """
-        if preset not in self.presets:
-            await self.send_message(
-                'Sorry %(reply_to)s, I don\'t recognise that preset. Use '
-                '!presets to see what is available.'
-                % {'reply_to': reply_to or 'friend'}
-            )
-            return
-
-        seed_uri = self.zsr.roll_seed(self.presets[preset], encrypt)
-
-        await self.send_message(
-            '%(reply_to)s, here is your seed: %(seed_uri)s'
-            % {'reply_to': reply_to or 'Okay', 'seed_uri': seed_uri}
+        await self.set_raceinfo('Randomizer v2.2.1 Seed {seed} Flags {flagstring}'.format(
+            seed=random.randint(1000000000000, 10000000000000),
+            flagstring=flags
         )
-        await self.set_raceinfo(seed_uri)
 
-        self.state['seed_rolled'] = True
-
-    async def send_presets(self):
-        """
-        Send a list of known presets to the race room.
-        """
-        await self.send_message('Available presets:')
-        for name, full_name in self.presets.items():
-            await self.send_message(f'{name} – {full_name}')
+        await self.send_message('GLHF!')
 
     def _race_in_progress(self):
         return self.data.get('status').get('value') in ('pending', 'in_progress')
