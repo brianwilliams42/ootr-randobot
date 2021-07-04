@@ -10,8 +10,8 @@ class RandoHandler(RaceHandler):
     def __init__(self, zsr, **kwargs):
         super().__init__(**kwargs)
 
-        self.zsr = zsr
-        self.presets = zsr.load_presets()
+        # self.zsr = zsr
+        # self.presets = zsr.load_presets()
         self.seed_rolled = False
 
     def should_stop(self):
