@@ -105,10 +105,12 @@ class RandoHandler(RaceHandler):
         """
         Roll a new seed and update the race info.
         """
-        await self.set_raceinfo('Randomizer v2.2.1 Seed {seed} Flags {flagstring}'.format(
+        await self.set_raceinfo('Randomizer v2.2.1 Seed {seed} Flags {flagstring}').format(
             seed=random.randint(1000000000000, 10000000000000),
             flagstring=flags
         )
+
+        await self.send_message('GLHF!')
 
     def _race_in_progress(self):
         return self.data.get('status').get('value') in ('pending', 'in_progress')
