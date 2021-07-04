@@ -96,8 +96,10 @@ class RandoHandler(RaceHandler):
             )
             return
 
+        words = message.get('message', '').split(' ')
+        
         await self.roll(
-            flags=args[0] if args else 'weekly',
+            flags=words[1],
             reply_to=reply_to,
         )
 
@@ -107,7 +109,7 @@ class RandoHandler(RaceHandler):
         """
         seed = random.randint(1000000000000, 10000000000000)
         flagstring = flags
-        await self.set_raceinfo('Randomizer v2.2.1 Seed {} Flags {}'.format(seed, flagstring))
+        await self.set_raceinfo('Randomizer v2.2.1 Seed {} Flags {}'.format(seed, flagstring), overwrite=True)
 
         await self.send_message('New seed with flags {} GLHF!'.format(flags))
 
