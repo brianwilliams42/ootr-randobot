@@ -6,10 +6,12 @@ class RandoHandler(RaceHandler):
     RandoBot race handler. Generates seeds, presets, and frustration.
     """
     stop_at = ['cancelled', 'finished']
+    default_version = 'v2.2.1'
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.seed_rolled = False
+        self.race_version = default_version
 
     def should_stop(self):
         return (
@@ -72,6 +74,19 @@ class RandoHandler(RaceHandler):
             return
         await self.roll_and_send(args, message)
 
+    @monitor_cmd
+    async def ex_version(self, args, message):
+        """
+        Handle !version commands.
+        """
+        if self._race_in_progress():
+            return
+        if len(args) != 1:
+            await self.send_message('Hey, you forgot a new version.')
+            return
+        self.race_version = words[1]
+        self.update_info()
+
     async def roll_and_send(self, args, message):
         """
         Read an incoming !dwflags command, and generate a new seed if
@@ -97,7 +112,7 @@ class RandoHandler(RaceHandler):
             return
 
         words = message.get('message', '').split(' ')
-        
+
         await self.roll(
             flags=words[1],
             reply_to=reply_to,
@@ -107,11 +122,14 @@ class RandoHandler(RaceHandler):
         """
         Roll a new seed and update the race info.
         """
-        seed = random.randint(1000000000000, 10000000000000)
-        flagstring = flags
-        await self.set_raceinfo('Randomizer v2.2.1 Seed {} Flags {}'.format(seed, flagstring), overwrite=True)
+        self.race_seed = random.randint(1000000000000, 10000000000000)
+        self.race_flagstring = flags
+        await self.update_info()
 
         await self.send_message('New seed with flags {} GLHF!'.format(flags))
+
+    async def update_info(self):
+        await self.set_raceinfo('Randomizer {} Seed {} Flags {}'.format(race_version, self.race_seed, self.race_flagstring), overwrite=True)
 
     def _race_in_progress(self):
         return self.data.get('status').get('value') in ('pending', 'in_progress')
