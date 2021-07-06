@@ -128,7 +128,7 @@ class RandoHandler(RaceHandler):
         await self.send_message('New seed with flags {} GLHF!'.format(flags))
 
     async def update_info(self):
-        await self.set_raceinfo('Randomizer {} Seed {} Flags {}'.format(race_version, self.race_seed, self.race_flagstring), overwrite=True)
+        await self.set_raceinfo('Randomizer {} Seed {} Flags {}'.format(self.race_version, self.race_seed, self.race_flagstring), overwrite=True)
 
     def _race_in_progress(self):
         return self.data.get('status').get('value') in ('pending', 'in_progress')
