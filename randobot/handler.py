@@ -83,6 +83,8 @@ class RandoHandler(RaceHandler):
         if len(args) != 1:
             await self.send_message('Hey, you forgot a new version.')
             return
+
+        words = message.get('message', '').split(' ')
         self.race_version = words[1]
         self.update_info()
 
