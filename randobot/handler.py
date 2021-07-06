@@ -86,7 +86,7 @@ class RandoHandler(RaceHandler):
 
         words = message.get('message', '').split(' ')
         self.race_version = words[1]
-        self.update_info()
+        await self.update_info()
 
     async def roll_and_send(self, args, message):
         """
