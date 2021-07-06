@@ -6,12 +6,11 @@ class RandoHandler(RaceHandler):
     RandoBot race handler. Generates seeds, presets, and frustration.
     """
     stop_at = ['cancelled', 'finished']
-    default_version = 'v2.2.1'
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.seed_rolled = False
-        self.race_version = default_version
+        self.race_version = 'v2.2.1'
 
     def should_stop(self):
         return (
