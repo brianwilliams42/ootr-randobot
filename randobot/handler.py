@@ -22,6 +22,9 @@ class RandoHandler(RaceHandler):
             await self.send_message(
                 'Welcome to DWR! Create a seed with !dwflags <flags>'
             )
+            await self.send_message(
+                'Full instructions for the bot commands at https://pastebin.com/4nKVRxXR'
+            )
             self.state['intro_sent'] = True
         if 'locked' not in self.state:
             self.state['locked'] = False
