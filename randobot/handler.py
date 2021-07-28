@@ -12,16 +12,6 @@ class RandoHandler(RaceHandler):
         self.seed_rolled = False
         self.race_version = 'v2.2.1'
 
-    def should_stop(self):
-        return (
-           # (
-           #     self.data.get('goal', {}).get('name') == 'Random settings league'
-           #     and not self.data.get('goal', {}).get('custom', False)
-           # )
-           # or
-           super().should_stop()
-        )
-
     async def begin(self):
         """
         Send introduction messages.
@@ -64,7 +54,6 @@ class RandoHandler(RaceHandler):
             'Lock released. Anyone may now roll a seed.'
         )
 
-    @monitor_cmd
     async def ex_dwflags(self, args, message):
         """
         Handle !dwflags commands.
@@ -73,7 +62,6 @@ class RandoHandler(RaceHandler):
             return
         await self.roll_and_send(args, message)
 
-    @monitor_cmd
     async def ex_version(self, args, message):
         """
         Handle !version commands.
