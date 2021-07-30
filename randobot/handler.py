@@ -34,7 +34,7 @@ class RandoHandler(RaceHandler):
             self.state['locked'] = False
         if 'fpa' not in self.state:
             self.state['fpa'] = False
-            
+
         self.state['seed_rolled'] = False
         self.state['race_version'] = 'v2.2.1'
 
@@ -85,10 +85,9 @@ class RandoHandler(RaceHandler):
 
         words = message.get('message', '').split(' ')
         version = words[1]
-        if (version.startswith('v') == False) {
+        if (version.startswith('v') == False):
             await self.send_message('Versions must start with "v" (ex.: "v2.2")')
             return
-        }
         self.state['race_version'] = version
         await self.update_info()
 
@@ -154,14 +153,13 @@ class RandoHandler(RaceHandler):
         self.state['race_flagstring'] = flags
         await self.update_info()
 
-    async def clear(self) {
+    async def clear(self):
         if (self.state['seed_rolled']):
           await self.set_raceinfo('')
         self.state['seed_rolled'] = False
         self.state['race_flagstring'] = ''
         self.state['race_seed'] = 0
         await self.send_message('Race info cleared!')
-    }
 
     async def update_info(self):
         if (self.state['seed_rolled']):
