@@ -155,10 +155,11 @@ class RandoHandler(RaceHandler):
 
     async def clear(self):
         if (self.state['seed_rolled']):
-          await self.set_raceinfo('')
+          await self.set_raceinfo('', overwrite=True)
         self.state['seed_rolled'] = False
         self.state['race_flagstring'] = ''
         self.state['race_seed'] = 0
+        self.state['version'] = 'v2.2.1'
         await self.send_message('Race info cleared!')
 
     async def update_info(self):
