@@ -111,6 +111,7 @@ class RandoHandler(RaceHandler):
             )
         else:
             await self.send_message('This command only works in Standard and Tournament')
+            await self.send_message('you are in {}'.format(category_name))
 
 
     async def roll_and_send(self, args, message):
