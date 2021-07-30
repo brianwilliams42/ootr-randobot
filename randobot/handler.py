@@ -9,8 +9,6 @@ class RandoHandler(RaceHandler):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.seed_rolled = False
-        self.race_version = 'v2.2.1'
 
     async def begin(self):
         """
@@ -19,17 +17,26 @@ class RandoHandler(RaceHandler):
         if self.should_stop():
             return
         if not self.state.get('intro_sent') and not self._race_in_progress():
+            category_name = self.data.get('name')
+            if (category_name == 'Standard' or category_name == 'Tournament'):
+                await self.send_message(
+                    'Welcome to DWR! Create a standard seed with !roll'
+                )
+            else:
+                await self.send_message(
+                    'Welcome to DWR! Create a custom flag seed with !dwflags <flags>'
+                )
             await self.send_message(
-                'Welcome to DWR! Create a seed with !dwflags <flags>'
-            )
-            await self.send_message(
-                'Full instructions for the bot commands at https://pastebin.com/4nKVRxXR'
+                'Full list of raceroom commands at https://pastebin.com/raw/4nKVRxXR'
             )
             self.state['intro_sent'] = True
         if 'locked' not in self.state:
             self.state['locked'] = False
         if 'fpa' not in self.state:
             self.state['fpa'] = False
+            
+        self.state['seed_rolled'] = False
+        self.state['race_version'] = 'v2.2.1'
 
     @monitor_cmd
     async def ex_lock(self, args, message):
@@ -67,7 +74,8 @@ class RandoHandler(RaceHandler):
 
     async def ex_version(self, args, message):
         """
-        Handle !version commands.
+        Handle !version commands. Must start with "v" and can be 
+        executed before or after rolling the seed.
         """
         if self._race_in_progress():
             return
@@ -76,8 +84,35 @@ class RandoHandler(RaceHandler):
             return
 
         words = message.get('message', '').split(' ')
-        self.race_version = words[1]
+        version = words[1]
+        if (version.startswith('v') == False) {
+            await self.send_message('Versions must start with "v" (ex.: "v2.2")')
+            return
+        }
+        self.state['race_version'] = version
         await self.update_info()
+
+    async def ex_clear(self, args, message):
+        """
+        Clears seed and flag from internal state and raceroom info.
+        """
+        await self.clear()
+
+    async def ex_roll(self, args, message):
+        """
+        Rolls a new seed with the room default flags.
+        """
+        reply_to = message.get('user', {}).get('name')
+        
+        category_name = self.data.get('name')
+        if (category_name == 'Standard' or category_name == 'Tournament'):
+            await self.roll(
+                flags="CDFGMPRSTWZar",
+                reply_to=reply_to,
+            )
+        else:
+            await self.send_message('This command only works in Standard and Tournament')
+
 
     async def roll_and_send(self, args, message):
         """
@@ -114,13 +149,31 @@ class RandoHandler(RaceHandler):
         """
         Roll a new seed and update the race info.
         """
-        self.race_seed = random.randint(1000000000000, 10000000000000)
-        self.race_flagstring = flags
+        self.state['race_seed'] = random.randint(1000000000000, 10000000000000)
+        self.state['seed_rolled'] = True
+        self.state['race_flagstring'] = flags
         await self.update_info()
 
+    async def clear(self) {
+        if (self.state['seed_rolled']):
+          await self.set_raceinfo('')
+        self.state['seed_rolled'] = False
+        self.state['race_flagstring'] = ''
+        self.state['race_seed'] = 0
+        await self.send_message('Race info cleared!')
+    }
+
     async def update_info(self):
-        await self.set_raceinfo('Randomizer {} Seed: {} Flags: {}'.format(self.race_version, self.race_seed, self.race_flagstring), overwrite=True)
-        await self.send_message('Randomizer {} Seed: {} Flags: {}'.format(self.race_version, self.race_seed, self.race_flagstring))
+        if (self.state['seed_rolled']):
+            await self.set_raceinfo('Randomizer {} Seed: {} Flags: {}'.format(
+                self.state['race_version'], 
+                self.state['race_seed'],
+                self.state['race_flagstring']),
+                overwrite=True)
+            await self.send_message('Randomizer {} Seed: {} Flags: {}'.format(
+                self.state['race_version'], 
+                self.state['race_seed'],
+                self.state['race_flagstring']))
 
     def _race_in_progress(self):
         return self.data.get('status').get('value') in ('pending', 'in_progress')
