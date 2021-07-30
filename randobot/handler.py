@@ -103,7 +103,7 @@ class RandoHandler(RaceHandler):
         """
         reply_to = message.get('user', {}).get('name')
         
-        category_name = self.data.category.get('category.name')
+        category_name = self.data.get('category.name')
         if (category_name == 'Standard Flags' or category_name == 'Tournament'):
             await self.roll(
                 flags="CDFGMPRSTWZar",
