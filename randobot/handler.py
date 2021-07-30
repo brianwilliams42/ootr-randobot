@@ -148,6 +148,8 @@ class RandoHandler(RaceHandler):
         """
         Roll a new seed and update the race info.
         """
+        if (self.state['seed_rolled']):
+          await self.send_message('Seed already rolled! Use !clear before re-rolling.')
         self.state['race_seed'] = random.randint(1000000000000, 10000000000000)
         self.state['seed_rolled'] = True
         self.state['race_flagstring'] = flags
