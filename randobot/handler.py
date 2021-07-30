@@ -17,7 +17,7 @@ class RandoHandler(RaceHandler):
         if self.should_stop():
             return
         if not self.state.get('intro_sent') and not self._race_in_progress():
-            category_name = self.data.get('name')
+            category_name = self.data.category.get('name')
             if (category_name == 'Standard Flags' or category_name == 'Tournament'):
                 await self.send_message(
                     'Welcome to DWR! Create a standard seed with !roll'
@@ -103,7 +103,7 @@ class RandoHandler(RaceHandler):
         """
         reply_to = message.get('user', {}).get('name')
         
-        category_name = self.data.get('name')
+        category_name = self.data.category.get('name')
         if (category_name == 'Standard Flags' or category_name == 'Tournament'):
             await self.roll(
                 flags="CDFGMPRSTWZar",
