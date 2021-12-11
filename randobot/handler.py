@@ -20,11 +20,11 @@ class RandoHandler(RaceHandler):
             goal_name = self.data.get('goal', {}).get('name')
             if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
                 await self.send_message(
-                    'Welcome to DWR! Create a standard seed with !roll'
+                    'Welcome to DWR! Create a standard seed with !roll or !roll3 for version 3.0'
                 )
             else:
                 await self.send_message(
-                    'Welcome to DWR! Create a custom flag seed with !dwflags <flags>'
+                    'Welcome to DWR! Create a custom flag seed with !dwflags <flags> or !dwflags3 <flags> for version 3.0'
                 )
             await self.send_message(
                 'Full list of raceroom commands at https://pastebin.com/raw/4nKVRxXR'
