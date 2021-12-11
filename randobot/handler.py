@@ -32,8 +32,6 @@ class RandoHandler(RaceHandler):
             self.state['intro_sent'] = True
         if 'locked' not in self.state:
             self.state['locked'] = False
-        if 'fpa' not in self.state:
-            self.state['fpa'] = False
 
         self.state['seed_rolled'] = False
         self.state['race_version'] = 'v2.2.1'
