@@ -237,8 +237,7 @@ class RandoHandler(RaceHandler):
                 self.state['race_version'], 
                 self.state['race_seed'],
                 self.state['race_flagstring']))
-            if (self.state['race_version'].startswith('v3')):
-                self.print_url()
+            await self.print_url()
 
     async def print_url(self):
         if (self.state['seed_rolled']):
