@@ -241,9 +241,10 @@ class RandoHandler(RaceHandler):
                 self.print_url()
 
     async def print_url(self):
-        await self.send_message('https://dwrandomizer.com/release/#flags={}}&seed={}}'.format(
-                    self.state['race_flagstring'], 
-                    self.state['race_seed']))
+        if (self.state['seed_rolled']):
+            await self.send_message('https://dwrandomizer.com/release/#flags={}}&seed={}}'.format(
+                self.state['race_flagstring'], 
+                self.state['race_seed']))
 
     def _race_in_progress(self):
         return self.data.get('status').get('value') in ('pending', 'in_progress')
