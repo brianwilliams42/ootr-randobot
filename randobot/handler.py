@@ -240,8 +240,7 @@ class RandoHandler(RaceHandler):
             await self.print_url()
 
     async def print_url(self):
-        await self.send_message('url for this seed...remove this if working')
-        if (self.state['seed_rolled']):
+        if (self.state['seed_rolled'] and self.state['race_version'].startswith('v3.0')):
             await self.send_message('https://dwrandomizer.com/release/#flags={}&seed={}'.format(
                 self.state['race_flagstring'], 
                 self.state['race_seed']))
