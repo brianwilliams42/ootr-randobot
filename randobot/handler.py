@@ -67,7 +67,7 @@ class RandoHandler(RaceHandler):
         """
         if self._race_in_progress():
             return
-        if not self.state['race_version']:
+        if not self.state.get('race_version'):
             self.state['race_version'] = 'v2.2.1'
         await self.roll_and_send(args, message)
 
@@ -77,7 +77,7 @@ class RandoHandler(RaceHandler):
         """
         if self._race_in_progress():
             return
-        if not self.state['race_version']:
+        if not self.state.get('race_version'):
             self.state['race_version'] = 'v3.0'
         await self.roll_and_send_v3(args, message)
 
