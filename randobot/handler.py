@@ -140,7 +140,77 @@ class RandoHandler(RaceHandler):
             )
         else:
             await self.send_message('This command only works in Standard and Tournament')
-
+            
+    async def ex_week1(self, args, message):
+        """
+        Rolls a new seed with the week 1 2022 winter league flags.
+        """
+        await self.roll3nonstandard('IVIAAVCEKAIACQAAAAAAAZIY', 'Speedy Standard', args, message)
+        
+    async def ex_week2(self, args, message):
+        """
+        Rolls a new seed with the week 2 2022 winter league flags.
+        """
+        await self.roll3nonstandard('MVKQAVCEKUIACQAAAAAAAYAY', 'Chaos Confusion', args, message)
+        
+    async def ex_week3(self, args, message):
+        """
+        Rolls a new seed with the week 3 2022 winter league flags.
+        """
+        await self.roll3nonstandard('IVKQIVCEKAIACAAAAAAAAYAQ', 'Dungeon Chaos', args, message)
+        
+    async def ex_week4(self, args, message):
+        """
+        Rolls a new seed with the week 4 2022 winter league flags.
+        """
+        await self.roll3nonstandard('KVIAAVCEKAIAAAIAAAAAAVAY', 'Wandering Princess', args, message)
+        
+    async def ex_week5(self, args, message):
+        """
+        Rolls a new seed with the week 5 2022 winter league flags.
+        """
+        await self.roll3nonstandard('IQIAAVCEKAKBAAAAAQAAAIQY', 'Vanilla-ish', args, message)
+        
+    async def ex_week6(self, args, message):
+        """
+        Rolls a new seed with the week 6 2022 winter league flags.
+        """
+        await self.roll3nonstandard('U2VIQ2EEVIUKVCQKBIAABWQY', 'Random% - The TRUE Chaos', args, message)
+        
+    async def ex_week7(self, args, message):
+        """
+        Rolls a new seed with the week 7 2022 winter league flags.
+        """
+        await self.roll3nonstandard('IVIEAVCEKAIAAABAAEAAAEIY', 'Alphabet Swamp', args, message)
+        
+    async def ex_week8a(self, args, message):
+        """
+        Rolls a new seed with the week 8a 2022 winter league flags.
+        """
+        await self.roll3nonstandard('QVIAIVCUKAIAAAAAAAAAAEAY', 'What defense?' args, message)
+        
+    async def ex_week8b(self, args, message):
+        """
+        Rolls a new seed with the week 8b 2022 winter league flags.
+        """
+        await self.roll3nonstandard('KVCUIVCEKUIAAAAAAUAAAEIY', 'Kitchen Sink!', args, message)
+            
+    async def roll3nonstandard(self, setflags, weekmsg, args, message):
+        """
+        Rolls a new seed with the room default flags for version 3.0.
+        """
+        reply_to = message.get('user', {}).get('name')
+        
+        goal_name = self.data.get('goal', {}).get('name')
+        if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
+            await self.send_message('This does not work in Standard or Standard Tournament')
+        else:
+            self.state['race_version'] = 'v3.0'
+            await self.send_message(weekmsg)
+            await self.roll(
+                flags=setflags,
+                reply_to=reply_to,
+            )
 
     async def roll_and_send(self, args, message):
         """
