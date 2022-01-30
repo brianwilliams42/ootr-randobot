@@ -187,7 +187,7 @@ class RandoHandler(RaceHandler):
         """
         Rolls a new seed with the week 8a 2022 winter league flags.
         """
-        await self.roll3nonstandard('QVIAIVCUKAIAAAAAAAAAAEAY', 'What defense?' args, message)
+        await self.roll3nonstandard('QVIAIVCUKAIAAAAAAAAAAEAY', 'What defense?', args, message)
         
     async def ex_week8b(self, args, message):
         """
