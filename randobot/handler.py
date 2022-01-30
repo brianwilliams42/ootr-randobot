@@ -195,7 +195,7 @@ class RandoHandler(RaceHandler):
         """
         await self.roll3nonstandard('KVCUIVCEKUIAAAAAAUAAAEIY', 'Kitchen Sink!', args, message)
             
-    async def roll3nonstandard(self, args, message, setflags, weekmsg):
+    async def roll3nonstandard(self, setflags, weekmsg, args, message):
         """
         Rolls a new seed with the room default flags for version 3.0.
         """
