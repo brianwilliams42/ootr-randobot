@@ -78,7 +78,7 @@ class RandoHandler(RaceHandler):
         if self._race_in_progress():
             return
         if not self.state.get('race_version'):
-            self.state['race_version'] = 'v3.0'
+            self.state['race_version'] = 'v3.0.1'
         await self.roll_and_send_v3(args, message)
 
     async def ex_version(self, args, message):
@@ -133,7 +133,7 @@ class RandoHandler(RaceHandler):
         
         goal_name = self.data.get('goal', {}).get('name')
         if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
-            self.state['race_version'] = 'v3.0'
+            self.state['race_version'] = 'v3.0.1'
             await self.roll(
                 flags="IVIAAVCAKACAAAAAAAAAAEAA",
                 reply_to=reply_to,
@@ -205,7 +205,7 @@ class RandoHandler(RaceHandler):
         if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
             await self.send_message('This does not work in Standard or Standard Tournament')
         else:
-            self.state['race_version'] = 'v3.0'
+            self.state['race_version'] = 'v3.0.1'
             await self.send_message(weekmsg)
             await self.roll(
                 flags=setflags,
