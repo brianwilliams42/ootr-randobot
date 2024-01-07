@@ -217,6 +217,8 @@ class RandoHandler(RaceHandler):
         if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
             await self.send_message('This does not work in Standard or Standard Tournament')
         else:
+            if not self.state.get('race_version'):
+                self.state['race_version'] = 'v3.0.3'
             await self.send_message(weekmsg)
             await self.roll(
                 flags=setflags,
