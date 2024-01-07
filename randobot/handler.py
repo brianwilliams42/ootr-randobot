@@ -34,6 +34,7 @@ class RandoHandler(RaceHandler):
             self.state['locked'] = False
 
         self.state['seed_rolled'] = False
+        self.state['beta_active'] = 0
 
     @monitor_cmd
     async def ex_lock(self, args, message):
@@ -62,14 +63,7 @@ class RandoHandler(RaceHandler):
         )
 
     async def ex_dwflags(self, args, message):
-        """
-        Handle !dwflags commands.
-        """
-        if self._race_in_progress():
-            return
-        if not self.state.get('race_version'):
-            self.state['race_version'] = 'v2.2.1'
-        await self.roll_and_send(args, message)
+        await self.ex_dwflags3(args, message);
 
     async def ex_dwflags3(self, args, message):
         """
@@ -78,7 +72,7 @@ class RandoHandler(RaceHandler):
         if self._race_in_progress():
             return
         if not self.state.get('race_version'):
-            self.state['race_version'] = 'v3.0.2'
+            self.state['race_version'] = 'v3.0.3'
         await self.roll_and_send_v3(args, message)
 
     async def ex_version(self, args, message):
@@ -101,6 +95,36 @@ class RandoHandler(RaceHandler):
         await self.send_message('Seed version updated to: {}'.format(version))
         await self.update_info()
 
+    async def ex_beta(self, args, message):
+        """
+        Handle !beta commands. Requires a version and build number.
+        Version starts with "v" and this command can be 
+        executed before or after rolling the seed.
+        """
+        if self._race_in_progress():
+            return
+        if len(args) != 2:
+            await self.send_message('Hey, you forgot a new version and build number.')
+            await self.send_message('Example: !beta v3.0.3 670')
+            return
+
+        words = message.get('message', '').split(' ')
+        if (words[1].startswith('v') == False):
+            await self.send_message('Versions must start with "v" (ex.: "v2.2")')
+            return
+        await self.set_beta(words[1:])
+
+
+    async def set_beta(self, words):
+        """
+        Sets the beta active and with the given version in words.
+        """
+        version = words[0] + 'b' + words[1]
+        self.state['race_version'] = version
+        self.state['beta_active'] = 1
+        await self.send_message('Seed version updated to: {}'.format(version))
+        await self.update_info()
+
     async def ex_url(self, args, message):
         await self.print_url()
 
@@ -111,19 +135,7 @@ class RandoHandler(RaceHandler):
         await self.clear()
 
     async def ex_roll(self, args, message):
-        """
-        Rolls a new seed with the room default flags.
-        """
-        reply_to = message.get('user', {}).get('name')
-        
-        goal_name = self.data.get('goal', {}).get('name')
-        if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
-            await self.roll(
-                flags="CDFGMPRSTWZar",
-                reply_to=reply_to,
-            )
-        else:
-            await self.send_message('This command only works in Standard and Tournament')
+        await self.ex_roll3(args, message);
 
     async def ex_roll3(self, args, message):
         """
@@ -133,9 +145,9 @@ class RandoHandler(RaceHandler):
         
         goal_name = self.data.get('goal', {}).get('name')
         if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
-            self.state['race_version'] = 'v3.0.2'
+            self.state['race_version'] = 'v3.0.3'
             await self.roll(
-                flags="IVIAAVCAKACAAAAAAAAAAEAA",
+                flags="IVIAAVCAKACAAAAAAAAAAEAQ",
                 reply_to=reply_to,
             )
         else:
@@ -143,57 +155,66 @@ class RandoHandler(RaceHandler):
             
     async def ex_week1(self, args, message):
         """
-        Rolls a new seed with the week 1 2022 winter league flags.
+        Rolls a new seed with the week 1 2023 winter league flags.
         """
-        await self.roll3nonstandard('IVIAAVCEKAIACQAAAAAAAZIQ', 'Speedy Standard', args, message)
+        await self.set_beta(['v3.0.3', '672'])
+        await self.roll3nonstandard('CVIQIVCEKACBAQAAAAAABKQQ', 'Underground Jungle', args, message)
         
     async def ex_week2(self, args, message):
         """
-        Rolls a new seed with the week 2 2022 winter league flags.
+        Rolls a new seed with the week 2 2023 winter league flags.
         """
-        await self.roll3nonstandard('MVKQAVCEKUIACQAAAAAAAYAQ', 'Chaos Confusion', args, message)
+        await self.set_beta(['v3.0.3', '672'])
+        await self.roll3nonstandard('IVKQAVCEKEAFKQIAAAAAAYAQ', 'Twisted Twin Tiebreak Trials', args, message)
         
     async def ex_week3(self, args, message):
         """
         Rolls a new seed with the week 3 2022 winter league flags.
         """
-        await self.roll3nonstandard('IVKQIVCEKAIACAAAAAAAAYAQ', 'Dungeon Chaos', args, message)
+        await self.set_beta(['v3.0.3', '672'])
+        await self.roll3nonstandard('KVKQAVCEKUAACQAAKAAAAYAQ', 'Chaos Confusion', args, message)
         
     async def ex_week4(self, args, message):
         """
         Rolls a new seed with the week 4 2022 winter league flags.
         """
-        await self.roll3nonstandard('KVIAAVCEKAIAAAIAAAAAAVAQ', 'Wandering Princess', args, message)
+        await self.set_beta(['v3.0.3','672'])
+        await self.roll3nonstandard('IQAAAVCEKFAFAAAAAQAAAIAQ', 'Vanilla-ish', args, message)
         
     async def ex_week5(self, args, message):
         """
         Rolls a new seed with the week 5 2022 winter league flags.
         """
-        await self.roll3nonstandard('IQAAAVCEKAKFAAAAAQAAAIQA', 'Vanilla-ish', args, message)
+        await self.set_beta(['v3.0.3','672'])
+        await self.roll3nonstandard('KVIEIVCEKACBAAAAIAAAAUIQ', 'Advanced Standard Plus', args, message)
         
     async def ex_week6(self, args, message):
         """
         Rolls a new seed with the week 6 2022 winter league flags.
         """
+        await self.set_beta(['v3.0.3','672'])
         await self.roll3nonstandard('U2VIQ2EEVIUKVCQKBIAABWQQ', 'Random% - The TRUE Chaos', args, message)
         
     async def ex_week7(self, args, message):
         """
         Rolls a new seed with the week 7 2022 winter league flags.
         """
-        await self.roll3nonstandard('IVIEAVCEKAIAAABAAEAAAEIQ', 'Alphabet Swamp', args, message)
+        await self.set_beta(['v3.0.3','672'])
+        await self.roll3nonstandard('IVIAAVCEKFAAAAAQAEAAAWAQ', 'Don’t Count Yourself Out', args, message)
         
     async def ex_week8a(self, args, message):
         """
         Rolls a new seed with the week 8a 2022 winter league flags.
         """
-        await self.roll3nonstandard('QVIAIVCUKAIAAAAAAAAAAEAQ', 'What defense?', args, message)
+        await self.set_beta(['v3.0.3','672'])
+        await self.roll3nonstandard('IVIEAVCUKUAAAAAACAAAAEAQ', 'Holey Protection', args, message)
         
     async def ex_week8b(self, args, message):
         """
         Rolls a new seed with the week 8b 2022 winter league flags.
         """
-        await self.roll3nonstandard('KVCUIVCEKUIAAAAAAUAAAEIQ', 'Kitchen Sink!', args, message)
+        await self.set_beta(['v3.0.3','672'])
+        await self.roll3nonstandard('KVKUIVCEKUAAAACAKUAAAEIQ', 'Kitchen Sink!', args, message)
             
     async def roll3nonstandard(self, setflags, weekmsg, args, message):
         """
@@ -205,7 +226,6 @@ class RandoHandler(RaceHandler):
         if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
             await self.send_message('This does not work in Standard or Standard Tournament')
         else:
-            self.state['race_version'] = 'v3.0.2'
             await self.send_message(weekmsg)
             await self.roll(
                 flags=setflags,
@@ -294,6 +314,7 @@ class RandoHandler(RaceHandler):
         self.state['race_flagstring'] = ''
         self.state['race_seed'] = 0
         self.state['race_version'] = ''
+        self.state['beta_active'] = 0
         await self.send_message('Race info cleared!')
 
     async def update_info(self):
@@ -310,8 +331,10 @@ class RandoHandler(RaceHandler):
             await self.print_url()
 
     async def print_url(self):
+        build_type='beta' if self.state['beta_active'] > 0 else 'release'
         if (self.state['seed_rolled'] and self.state['race_version'].startswith('v3.0')):
-            await self.send_message('https://dwrandomizer.com/release/#flags={}&seed={}'.format(
+            await self.send_message('https://dwrandomizer.com/{}/#flags={}&seed={}'.format(
+                build_type,
                 self.state['race_flagstring'], 
                 self.state['race_seed']))
 
