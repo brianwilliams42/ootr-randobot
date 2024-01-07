@@ -155,66 +155,57 @@ class RandoHandler(RaceHandler):
             
     async def ex_week1(self, args, message):
         """
-        Rolls a new seed with the week 1 2023 winter league flags.
+        Rolls a new seed with the week 1 2024 winter league flags.
         """
-        await self.set_beta(['v3.0.3', '672'])
-        await self.roll3nonstandard('CVIQIVCEKACBAQAAAAAABKQQ', 'Underground Jungle', args, message)
+        await self.roll3nonstandard('CVIQAVCFKACBAQAAIAAAA2QQ', 'Willkommen in der Winterliga', args, message)
         
     async def ex_week2(self, args, message):
         """
-        Rolls a new seed with the week 2 2023 winter league flags.
+        Rolls a new seed with the week 2 2024 winter league flags.
         """
-        await self.set_beta(['v3.0.3', '672'])
-        await self.roll3nonstandard('IVKQAVCEKEAFKQIAAAAAAYAQ', 'Twisted Twin Tiebreak Trials', args, message)
+        await self.roll3nonstandard('IVKAAVCECUABDAAAIAAAA2QQ', 'Chaos Lite', args, message)
         
     async def ex_week3(self, args, message):
         """
-        Rolls a new seed with the week 3 2022 winter league flags.
+        Rolls a new seed with the week 3 2024 winter league flags.
         """
-        await self.set_beta(['v3.0.3', '672'])
-        await self.roll3nonstandard('KVKQAVCEKUAACQAAKAAAAYAQ', 'Chaos Confusion', args, message)
+        await self.roll3nonstandard('KVIAIVCFKACBAAIAIAAAAUIQ', 'Triplet Shuffle', args, message)
         
     async def ex_week4(self, args, message):
         """
-        Rolls a new seed with the week 4 2022 winter league flags.
+        Rolls a new seed with the week 4 2024 winter league flags.
         """
-        await self.set_beta(['v3.0.3','672'])
-        await self.roll3nonstandard('IQAAAVCEKFAFAAAAAQAAAIAQ', 'Vanilla-ish', args, message)
+        await self.roll3nonstandard('QSAAAZEEUJUFEAAAAAAAAKQQ', 'Vanilla Beanboozled', args, message)
         
     async def ex_week5(self, args, message):
         """
-        Rolls a new seed with the week 5 2022 winter league flags.
+        Rolls a new seed with the week 5 2024 winter league flags.
         """
-        await self.set_beta(['v3.0.3','672'])
-        await self.roll3nonstandard('KVIEIVCEKACBAAAAIAAAAUIQ', 'Advanced Standard Plus', args, message)
+        await self.roll3nonstandard('IVKUAVCEKUABAAAAIAAAAFIQ', 'Catastrophe Chaotique (Chaos Part II, The Chaos-ening)', args, message)
         
     async def ex_week6(self, args, message):
         """
-        Rolls a new seed with the week 6 2022 winter league flags.
+        Rolls a new seed with the week 6 2024 winter league flags.
         """
-        await self.set_beta(['v3.0.3','672'])
-        await self.roll3nonstandard('U2VIQ2EEVIUKVCQKBIAABWQQ', 'Random% - The TRUE Chaos', args, message)
+        await self.roll3nonstandard('UWVIQ2EEVIUKVAAKVIAABWQQ', 'Random%', args, message)
         
     async def ex_week7(self, args, message):
         """
-        Rolls a new seed with the week 7 2022 winter league flags.
+        Rolls a new seed with the week 7 2024 winter league flags.
         """
-        await self.set_beta(['v3.0.3','672'])
         await self.roll3nonstandard('IVIAAVCEKFAAAAAQAEAAAWAQ', 'Don’t Count Yourself Out', args, message)
         
     async def ex_week8a(self, args, message):
         """
-        Rolls a new seed with the week 8a 2022 winter league flags.
+        Rolls a new seed with the week 8a 2024 winter league flags.
         """
-        await self.set_beta(['v3.0.3','672'])
-        await self.roll3nonstandard('IVIEAVCUKUAAAAAACAAAAEAQ', 'Holey Protection', args, message)
+        await self.roll3nonstandard('IVIEAVCUKUAAAAAACAAAAEAQ', 'Permanent Repel', args, message)
         
     async def ex_week8b(self, args, message):
         """
-        Rolls a new seed with the week 8b 2022 winter league flags.
+        Rolls a new seed with the week 8b 2024 winter league flags.
         """
-        await self.set_beta(['v3.0.3','672'])
-        await self.roll3nonstandard('KVKUIVCEKUAAAACAKUAAAEIQ', 'Kitchen Sink!', args, message)
+        await self.roll3nonstandard('KVKUIVCEKUAAAAAAKEAAAEIQ', 'Kitchen Sink!', args, message)
             
     async def roll3nonstandard(self, setflags, weekmsg, args, message):
         """
