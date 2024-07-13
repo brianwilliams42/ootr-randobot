@@ -147,7 +147,7 @@ class RandoHandler(RaceHandler):
         if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
             self.state['race_version'] = 'v3.0.3'
             await self.roll(
-                flags="IVIAAVCAKACAAAAAAAAAAEAQ",
+                flags="IVIAAVCEKACAAAAACAAAAEAQ",
                 reply_to=reply_to,
             )
         else:
