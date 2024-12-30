@@ -157,7 +157,7 @@ class RandoHandler(RaceHandler):
         """
         Rolls a new seed with the week 1 2024 winter league flags.
         """
-        await self.roll3nonstandard('CVKQAVCECUABCQAAIAAAAZAQ', 'Its Winter Chaos Time', args, message)
+        await self.roll3nonstandard('CVKQAVCECUABCQAAIAAAAZAQ', 'It`s Winter Chaos Time', args, message)
         
     async def ex_week2(self, args, message):
         """
@@ -193,7 +193,7 @@ class RandoHandler(RaceHandler):
         """
         Rolls a new seed with the week 7 2024 winter league flags.
         """
-        await self.roll3nonstandard('UWJIAVCVSJCBAAAAMAAAAGRU', 'Random Repel Runback, args, message)
+        await self.roll3nonstandard('UWJIAVCVSJCBAAAAMAAAAGRU', 'Random Repel Runback', args, message)
         
     async def ex_week8a(self, args, message):
         """
