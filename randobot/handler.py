@@ -158,55 +158,55 @@ class RandoHandler(RaceHandler):
         Rolls a new seed with the week 1 2024 winter league flags.
         """
         await self.roll3nonstandard('CVKQAVCECUABCQAAIAAAAZAQ', 'It`s Winter Chaos Time', args, message)
-        
+
     async def ex_week2(self, args, message):
         """
         Rolls a new seed with the week 2 2024 winter league flags.
         """
         await self.roll3nonstandard('IVKAAVCFKECBAQCAKEAAAZBU', 'Big Swamp? No Hurtmore? No Problem!', args, message)
-        
+
     async def ex_week3(self, args, message):
         """
         Rolls a new seed with the week 3 2024 winter league flags.
         """
         await self.roll3nonstandard('IQAAAVCUAAABAAIAIAAAAIAQ', 'Neapolitan-ish', args, message)
-        
+
     async def ex_week4(self, args, message):
         """
         Rolls a new seed with the week 4 2024 winter league flags.
         """
         await self.roll3nonstandard('UWVIA2CEVIUBVAAKUIAABWQQ', 'Random%', args, message)
-        
+
     async def ex_week5(self, args, message):
         """
         Rolls a new seed with the week 5 2024 winter league flags.
         """
         await self.roll3nonstandard('KVIUAVCEKUABAAAAIAAAAFJU', 'ChaosThe2nd', args, message)
-        
+
     async def ex_week6(self, args, message):
         """
         Rolls a new seed with the week 6 2024 winter league flags.
         """
         await self.roll3nonstandard('KVIAIVCFKUABAAAAIAAAAEJU', 'Stair Shuffle Chaos', args, message)
-        
+
     async def ex_week7(self, args, message):
         """
         Rolls a new seed with the week 7 2024 winter league flags.
         """
         await self.roll3nonstandard('UWJIAVCVSJCBAAAAMAAAAGRU', 'Random Repel Runback', args, message)
-        
+
     async def ex_week8a(self, args, message):
         """
         Rolls a new seed with the week 8a 2024 winter league flags.
         """
         await self.roll3nonstandard('IVIAAVCAKACBAACVCQAAAEJE', 'You No Nothing, Jon Snow', args, message)
-        
+
     async def ex_week8b(self, args, message):
         """
         Rolls a new seed with the week 8b 2024 winter league flags.
         """
         await self.roll3nonstandard('KVIUIVCEKVABAAAAKEAAAEJU', 'Kitchen Sink!', args, message)
-            
+
     async def roll3nonstandard(self, setflags, weekmsg, args, message):
         """
         Rolls a new seed with the room default flags for version 3.0.
