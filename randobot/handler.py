@@ -163,7 +163,7 @@ class RandoHandler(RaceHandler):
         """
         Rolls a new seed with the week 2 2024 winter league flags.
         """
-        await self.roll3nonstandard('IVKAAVCFKECBAQCAKEAAAZBU', 'Big Swamp? No Hurtmore? No Problem!', args, message)
+        await self.roll3nonstandard('IVKAAVCFKECBAQCAKEAAAZBU', 'Big Swamp, No Hurtmore, No Problem!', args, message)
         
     async def ex_week3(self, args, message):
         """
