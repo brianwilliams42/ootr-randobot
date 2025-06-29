@@ -1,13 +1,5 @@
-from enum import Enum, StrEnum
 from racetime_bot import RaceHandler, monitor_cmd, can_moderate, can_monitor
 import random
-
-# class syntax
-class BuildType(StrEnum):
-    RELEASE = 'release'
-    BETA = 'beta'
-    JUEF = 'juef'
-    TOURNEY = 'te'
 
 class RandoHandler(RaceHandler):
     """
@@ -42,7 +34,7 @@ class RandoHandler(RaceHandler):
             self.state['locked'] = False
 
         self.state['seed_rolled'] = False
-        self.state['build_type'] = RELEASE
+        self.state['build_type'] = 'release'
 
     @monitor_cmd
     async def ex_lock(self, args, message):
@@ -129,7 +121,7 @@ class RandoHandler(RaceHandler):
         """
         version = words[0] + 'b' + words[1]
         self.state['race_version'] = version
-        self.state['build_type'] = BETA
+        self.state['build_type'] = 'beta'
         await self.send_message('Seed version updated to: {}'.format(version))
         await self.update_info()
 
@@ -315,7 +307,7 @@ class RandoHandler(RaceHandler):
         self.state['race_flagstring'] = ''
         self.state['race_seed'] = 0
         self.state['race_version'] = ''
-        self.state['build_type'] = RELEASE
+        self.state['build_type'] = 'release'
         await self.send_message('Race info cleared!')
 
     async def update_info(self):
@@ -332,7 +324,7 @@ class RandoHandler(RaceHandler):
             await self.print_url()
 
     async def print_url(self):
-        build_type=self.state['build_type'].__str__
+        build_type=self.state['build_type']
         if (self.state['seed_rolled'] and self.state['race_version'].startswith('v3.0')):
             await self.send_message('https://dwrandomizer.com/{}/#flags={}&seed={}'.format(
                 build_type,
