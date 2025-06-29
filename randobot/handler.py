@@ -183,11 +183,12 @@ class RandoHandler(RaceHandler):
             return
         goal_name = self.data.get('goal', {}).get('name')
         if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
+            await self.send_message('This command does not work in Standard or Tournament')
+            return
+        else:
             self.state['race_version'] = 'v3.0.3.18'
             self.state['build_type'] = 'juef'
             await self.roll_and_send_v3(args, message)
-        else:
-            await self.send_message('This command only works in Standard and Tournament')
 
     async def ex_week1(self, args, message):
         """
