@@ -361,7 +361,7 @@ class RandoHandler(RaceHandler):
 
     async def print_url(self):
         build_type=self.state['build_type']
-        if (self.state['seed_rolled'] and build_type='juef'):
+        if (self.state['seed_rolled'] and build_type == 'juef'):
             await self.send_message('https://snestop.jerther.com/misc/dwr/unofficial_juef/current/#flags={}&seed={}'.format(
                 self.state['race_flagstring'], 
                 self.state['race_seed']))
