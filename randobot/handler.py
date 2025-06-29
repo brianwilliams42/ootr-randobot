@@ -144,8 +144,25 @@ class RandoHandler(RaceHandler):
         reply_to = message.get('user', {}).get('name')
         
         goal_name = self.data.get('goal', {}).get('name')
-        if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
+        if (goal_name == 'Standard Flags'):
             self.state['race_version'] = 'v3.0.3'
+            await self.roll(
+                flags="IVIAAVCEKACAAAAAAAAAAEAQ",
+                reply_to=reply_to,
+            )
+        else:
+            await self.send_message('This command only works in Standard and Tournament')
+
+    async def ex_summer(self, args, message):
+        """
+        Rolls a new seed with the room default flags for version 3.0.
+        """
+        reply_to = message.get('user', {}).get('name')
+        
+        goal_name = self.data.get('goal', {}).get('name')
+        if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
+            self.state['race_version'] = 'v2025-TE'
+            self.state['build_type'] = 'te'
             await self.roll(
                 flags="IVIAAVCEKACAAAAAAAAAAEAQ",
                 reply_to=reply_to,
