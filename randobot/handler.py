@@ -151,7 +151,7 @@ class RandoHandler(RaceHandler):
                 reply_to=reply_to,
             )
         else:
-            await self.send_message('This command only works in Standard and Tournament')
+            await self.send_message('This command only works in Standard')
 
     async def ex_summer(self, args, message):
         """
