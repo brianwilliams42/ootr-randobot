@@ -132,6 +132,8 @@ class RandoHandler(RaceHandler):
         """
         Clears seed and flag from internal state and raceroom info.
         """
+        if self._race_in_progress():
+            return
         await self.clear()
 
     async def ex_roll(self, args, message):
@@ -142,7 +144,8 @@ class RandoHandler(RaceHandler):
         Rolls a new seed with the room default flags for version 3.0.
         """
         reply_to = message.get('user', {}).get('name')
-        
+        if self._race_in_progress():
+            return
         goal_name = self.data.get('goal', {}).get('name')
         if (goal_name == 'Standard Flags'):
             self.state['race_version'] = 'v3.0.3'
@@ -158,7 +161,8 @@ class RandoHandler(RaceHandler):
         Rolls a new seed with the room default flags for version 3.0.
         """
         reply_to = message.get('user', {}).get('name')
-        
+        if self._race_in_progress():
+            return
         goal_name = self.data.get('goal', {}).get('name')
         if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
             self.state['race_version'] = 'v2025-TE'
@@ -167,6 +171,21 @@ class RandoHandler(RaceHandler):
                 flags="IVIAAVCEKACAAAAAAAAAAEAQ",
                 reply_to=reply_to,
             )
+        else:
+            await self.send_message('This command only works in Standard and Tournament')
+
+    async def ex_juef(self, args, message):
+        """
+        Rolls a new seed with the provided flags for a juef-build race.
+        """
+        reply_to = message.get('user', {}).get('name')
+        if self._race_in_progress():
+            return
+        goal_name = self.data.get('goal', {}).get('name')
+        if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
+            self.state['race_version'] = 'v3.0.3.18'
+            self.state['build_type'] = 'juef'
+            await self.roll_and_send_v3(args, message)
         else:
             await self.send_message('This command only works in Standard and Tournament')
 
@@ -342,6 +361,11 @@ class RandoHandler(RaceHandler):
 
     async def print_url(self):
         build_type=self.state['build_type']
+        if (self.state['seed_rolled'] and build_type='juef'):
+            await self.send_message('https://snestop.jerther.com/misc/dwr/unofficial_juef/current/#flags={}&seed={}'.format(
+                self.state['race_flagstring'], 
+                self.state['race_seed']))
+            return
         if (self.state['seed_rolled'] and (self.state['race_version'].startswith('v3.0') or self.state['race_version'].startswith('v2025-TE'))):
             await self.send_message('https://dwrandomizer.com/{}/#flags={}&seed={}'.format(
                 build_type,
