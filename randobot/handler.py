@@ -185,7 +185,7 @@ class RandoHandler(RaceHandler):
         if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
             self.state['race_version'] = 'v2025-TE'
             self.state['build_type'] = 'te'
-            await await self.roll_and_send_v3(args, message)
+            await self.roll_and_send_v3(args, message)
         else:
             await self.send_message('This command only works in Standard and Tournament')
 
