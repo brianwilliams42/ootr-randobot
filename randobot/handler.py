@@ -1,6 +1,10 @@
 from racetime_bot import RaceHandler, monitor_cmd, can_moderate, can_monitor
 import random
 
+# Acceptable seed range: exactly 13 digits
+SEED_MIN = 1_000_000_000_000
+SEED_MAX = 9_999_999_999_999
+
 class RandoHandler(RaceHandler):
     """
     RandoBot race handler. Generates seeds, presets, and frustration.
@@ -347,7 +351,9 @@ class RandoHandler(RaceHandler):
           await self.send_message('Seed already rolled! Use !clear before re-rolling.')
           return
 
-        self.state['race_seed'] = random.randint(1000000000000, 10000000000000)
+        # seeds are 13 digits long; randint's upper bound is inclusive, so
+        # generate values between SEED_MIN and SEED_MAX
+        self.state['race_seed'] = random.randint(SEED_MIN, SEED_MAX)
         self.state['seed_rolled'] = True
         self.state['race_flagstring'] = flags
         await self.update_info()
