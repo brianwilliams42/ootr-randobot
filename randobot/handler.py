@@ -205,7 +205,7 @@ class RandoHandler(RaceHandler):
             await self.send_message('This command does not work in Standard or Tournament')
             return
         else:
-            self.state['race_version'] = 'juef-v3.0.3.18'
+            self.state['race_version'] = 'juef-v3.0.3.19'
             self.state['build_type'] = 'juef'
             await self.roll_and_send_v3(args, message)
 
@@ -384,7 +384,8 @@ class RandoHandler(RaceHandler):
     async def print_url(self):
         build_type=self.state['build_type']
         if (self.state['seed_rolled'] and build_type == 'juef'):
-            await self.send_message('https://snestop.jerther.com/misc/dwr/unofficial_juef/current/#flags={}&seed={}'.format(
+            await self.send_message('https://juef.free.nf/dwr/unofficial_juef/{}/#flags={}&seed={}'.format(
+                (self.state['race_version']).split("-")[-1],
                 self.state['race_flagstring'], 
                 self.state['race_seed']))
             return
