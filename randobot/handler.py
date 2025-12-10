@@ -384,10 +384,10 @@ class RandoHandler(RaceHandler):
     async def print_url(self):
         build_type=self.state['build_type']
         if (self.state['seed_rolled'] and build_type == 'juef'):
-            await self.send_message('https://juef.free.nf/dwr/unofficial_juef/{}/#flags={}&seed={}'.format(
-                (self.state['race_version']).split("-")[-1],
-                self.state['race_flagstring'], 
-                self.state['race_seed']))
+            await self.send_message('https://juef17.github.io/dwrandomizer/#flags={}&seed={}&v={}'.format(
+                self.state['race_flagstring'],
+                self.state['race_seed'], 
+                (self.state['race_version']).split("-")[-1]))
             return
         if (self.state['seed_rolled'] and (self.state['race_version'].startswith('v3.0') or self.state['race_version'].startswith('v2025-TE'))):
             await self.send_message('https://dwrandomizer.com/{}/#flags={}&seed={}'.format(
