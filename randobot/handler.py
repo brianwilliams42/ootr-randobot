@@ -5,6 +5,9 @@ import random
 SEED_MIN = 1_000_000_000_000
 SEED_MAX = 9_999_999_999_999
 
+current_mcgrew_version = "v3.0.3"
+current_juef_version = "v3.0.3.20"
+
 class RandoHandler(RaceHandler):
     """
     RandoBot race handler. Generates seeds, presets, and frustration.
@@ -24,11 +27,11 @@ class RandoHandler(RaceHandler):
             goal_name = self.data.get('goal', {}).get('name')
             if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
                 await self.send_message(
-                    'Welcome to DWR! Create a standard seed with !roll or !roll3 for version 3.0'
+                    'Welcome to DWR! Create a standard seed with !roll or !summer for 2025 Summer Tournament Edition'
                 )
             else:
                 await self.send_message(
-                    'Welcome to DWR! Create a custom flag seed with !dwflags <flags> or !dwflags3 <flags> for version 3.0'
+                    'Welcome to DWR! Create a custom flag seed with !dwflags <flags> or with !juef <flags>'
                 )
             await self.send_message(
                 'Full list of raceroom commands at https://pastebin.com/raw/4nKVRxXR'
@@ -76,7 +79,7 @@ class RandoHandler(RaceHandler):
         if self._race_in_progress():
             return
         if not self.state.get('race_version'):
-            self.state['race_version'] = 'v3.0.3'
+            self.state['race_version'] = current_mcgrew_version
         await self.roll_and_send_v3(args, message)
 
     async def ex_version(self, args, message):
@@ -152,7 +155,7 @@ class RandoHandler(RaceHandler):
             return
         goal_name = self.data.get('goal', {}).get('name')
         if (goal_name == 'Standard Flags'):
-            self.state['race_version'] = 'v3.0.3'
+            self.state['race_version'] = current_mcgrew_version
             await self.roll(
                 flags="IVIAAVCEKACAAAAAAAAAAEAQ",
                 reply_to=reply_to,
@@ -162,7 +165,7 @@ class RandoHandler(RaceHandler):
 
     async def ex_summer(self, args, message):
         """
-        Rolls a new seed with the room default flags for version 3.0.
+        Rolls a new seed with the room default flags for 2025 Summer Tournament Edition.
         """
         reply_to = message.get('user', {}).get('name')
         if self._race_in_progress():
@@ -175,21 +178,6 @@ class RandoHandler(RaceHandler):
                 flags="IVIAAVCEKACAAAAAAAAAAEAQ",
                 reply_to=reply_to,
             )
-        else:
-            await self.send_message('This command only works in Standard and Tournament')
-
-    async def ex_summerflags(self, args, message):
-        """
-        Rolls a new seed with the room default flags for version 3.0.
-        """
-        reply_to = message.get('user', {}).get('name')
-        if self._race_in_progress():
-            return
-        goal_name = self.data.get('goal', {}).get('name')
-        if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
-            self.state['race_version'] = 'v2025-TE'
-            self.state['build_type'] = 'te'
-            await self.roll_and_send_v3(args, message)
         else:
             await self.send_message('This command only works in Standard and Tournament')
 
@@ -205,67 +193,85 @@ class RandoHandler(RaceHandler):
             await self.send_message('This command does not work in Standard or Tournament')
             return
         else:
-            self.state['race_version'] = 'juef-v3.0.3.20'
+            self.state['race_version'] = current_juef_version
             self.state['build_type'] = 'juef'
             await self.roll_and_send_v3(args, message)
 
     async def ex_week1(self, args, message):
         """
-        Rolls a new seed with the week 1 2024 winter league flags.
+        Rolls a new seed with the week 1 2026 winter league flags.
         """
-        await self.roll3nonstandard('CVKQAVCECUABCQAAIAAAAZAQ', 'It`s Winter Chaos Time', args, message)
+        # WL2025
+        # await self.roll3nonstandard('CVKQAVCECUABCQAAIAAAAZAQ', 'It`s Winter Chaos Time', args, message)
+        await self.roll3juef('IVKEAVAUKACBIQAACAAAAEIUAAQBAAAAABYKCAAA', 'Winter Ain’t Too Cold Yet ❄️', args, message)
 
     async def ex_week2(self, args, message):
         """
-        Rolls a new seed with the week 2 2024 winter league flags.
+        Rolls a new seed with the week 2 2026 winter league flags.
         """
-        await self.roll3nonstandard('IVIAAVCFKECBAQCAKEAAAZBU', 'Big Swamp? No Hurtmore? No Problem!', args, message)
+        # WL2025
+        # await self.roll3nonstandard('IVIAAVCFKECBAQCAKEAAAZBU', 'Big Swamp? No Hurtmore? No Problem!', args, message)
+        await self.roll3juef('KVIAAVCEKACBAAAAAAAAAEAUBIQCAAIEAVSGGEAB', 'No Gold Grind? Easy! 💳', args, message)
 
     async def ex_week3(self, args, message):
         """
-        Rolls a new seed with the week 3 2024 winter league flags.
+        Rolls a new seed with the week 3 2026 winter league flags.
         """
-        await self.roll3nonstandard('IQAAAVCUAAABAAIAIAAAAIAQ', 'Neapolitan-ish', args, message)
+        # WL2025
+        # await self.roll3nonstandard('IQAAAVCUAAABAAIAIAAAAIAQ', 'Neapolitan-ish', args, message)
+        await self.roll3juef('AQAAAVCEKACBAAAAAAAAAEAUAAQFACAQACICGAEB', 'Vanilla++ 🍦', args, message)
 
     async def ex_week4(self, args, message):
         """
-        Rolls a new seed with the week 4 2024 winter league flags.
+        Rolls a new seed with the week 4 2026 winter league flags.
         """
-        await self.roll3nonstandard('UWVIA2CEVIUBVAAKUIAABWQQ', 'Random%', args, message)
+        # WL2025
+        # await self.roll3nonstandard('UWVIA2CEVIUBVAAKUIAABWQQ', 'Random%', args, message)
+        await self.roll3juef('IVIQAVCEKUCFAAAAAAAAAFIUAAQBAAABCBYCCBMB', 'Gotta Love Chaos 💥', args, message)
 
     async def ex_week5(self, args, message):
         """
-        Rolls a new seed with the week 5 2024 winter league flags.
+        Rolls a new seed with the week 5 2026 winter league flags.
         """
-        await self.roll3nonstandard('KVIUAVCEKUABAAAAIAAAAFJU', 'ChaosThe2nd', args, message)
+        # WL2025
+        # await self.roll3nonstandard('KVIUAVCEKUABAAAAIAAAAFJU', 'ChaosThe2nd', args, message)
+        await self.roll3juef('KVIAIVCEKECBAAAAAEAABEIUIAQBAAIFABY6CVBA', 'Stair Shuffle made easy…ish 𓊍', args, message)
 
     async def ex_week6(self, args, message):
         """
-        Rolls a new seed with the week 6 2024 winter league flags.
+        Rolls a new seed with the week 6 2026 winter league flags.
         """
-        await self.roll3nonstandard('KVIAIVCFKUABAAAAIAAAAEJU', 'Stair Shuffle Chaos', args, message)
+        # WL2025
+        # await self.roll3nonstandard('KVIAIVCFKUABAAAAIAAAAEJU', 'Stair Shuffle Chaos', args, message)
+        await self.roll3juef('IVIAAVCEKACBAAAAAQAAAEIUAAQBAQABABYCGFFB', 'Watch Your Head (and other people’s) 🤕', args, message)
 
     async def ex_week7(self, args, message):
         """
-        Rolls a new seed with the week 7 2024 winter league flags.
+        Rolls a new seed with the week 7 2026 winter league flags.
         """
-        await self.roll3nonstandard('UWJIAVCVSJCBAAAAMAAAAGRU', 'Random Repel Runback', args, message)
+        # WL2025
+        # await self.roll3nonstandard('UWJIAVCVSJCBAAAAMAAAAGRU', 'Random Repel Runback', args, message)
+        await self.roll3juef('IVIQAVCEKQCBAAAAAAAAAUAUAVQRIBCAABYCCAIA', 'Go Mode? Don’t Know Mode 🏁', args, message)
 
     async def ex_week8a(self, args, message):
         """
-        Rolls a new seed with the week 8a 2024 winter league flags.
+        Rolls a new seed with the week 8a 2026 winter league flags.
         """
-        await self.roll3nonstandard('IVIAAVCAKACBAACVCQAAAEJE', 'You No Nothing, Jon Snow', args, message)
+        # WL2025
+        # await self.roll3nonstandard('IVIAAVCAKACBAACVCQAAAEJE', 'You No Nothing, Jon Snow', args, message)
+        await self.roll3juef('UVUEQ2CAVKUBFAAAFIAABWQUAAQBAAAAABYKCAAA', 'Kitchen Sink v2026 🚮', args, message)
 
     async def ex_week8b(self, args, message):
         """
-        Rolls a new seed with the week 8b 2024 winter league flags.
+        Rolls a new seed with the week 8b 2026 winter league flags.
         """
-        await self.roll3nonstandard('KVIUIVCEKVABAAAAKEAAAEJU', 'Kitchen Sink!', args, message)
+        # WL2025
+        # await self.roll3nonstandard('KVIUIVCEKVABAAAAKEAAAEJU', 'Kitchen Sink!', args, message)
+        await self.roll3juef('KVIQAVCAKUCBAAAVAAAAAYAUABQABSCAABYSCAFB', '🎵 J’suis plus sensible à l’invisible  🎶', args, message)
 
     async def roll3nonstandard(self, setflags, weekmsg, args, message):
         """
-        Rolls a new seed with the room default flags for version 3.0.
+        Rolls a new seed with the given flags for version 3.0.
         """
         reply_to = message.get('user', {}).get('name')
         
@@ -274,7 +280,26 @@ class RandoHandler(RaceHandler):
             await self.send_message('This does not work in Standard or Standard Tournament')
         else:
             if not self.state.get('race_version'):
-                self.state['race_version'] = 'v3.0.3'
+                self.state['race_version'] = current_mcgrew_version
+            await self.send_message(weekmsg)
+            await self.roll(
+                flags=setflags,
+                reply_to=reply_to,
+            )
+
+    async def roll3juef(self, setflags, weekmsg, args, message):
+        """
+        Rolls a new seed with the given flags for juef version.
+        """
+        reply_to = message.get('user', {}).get('name')
+        
+        goal_name = self.data.get('goal', {}).get('name')
+        if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
+            await self.send_message('This does not work in Standard or Standard Tournament')
+        else:
+            if not self.state.get('race_version'):
+                self.state['race_version'] = current_juef_version
+                self.state['build_type'] = 'juef'
             await self.send_message(weekmsg)
             await self.roll(
                 flags=setflags,
