@@ -227,7 +227,7 @@ class RandoHandler(RaceHandler):
         """
         # WL2025
         # await self.roll3nonstandard('UWVIA2CEVIUBVAAKUIAABWQQ', 'Random%', args, message)
-        await self.roll3juef('IVIQAVCEKUCFAAAAAAAAAFIUAAQBAAABCBYCCBMB', 'Gotta Love Chaos 💥', args, message)
+        await self.roll3juef('IVIQAVCEKUCBAAAAAAAAAKIUAAQBAAABCBYCCBMB', 'Gotta Love Chaos 💥', args, message)
 
     async def ex_week5(self, args, message):
         """
@@ -235,7 +235,7 @@ class RandoHandler(RaceHandler):
         """
         # WL2025
         # await self.roll3nonstandard('KVIUAVCEKUABAAAAIAAAAFJU', 'ChaosThe2nd', args, message)
-        await self.roll3juef('KVIAIVCEKECBAAAAAEAABEIUIAQBAAIFABY6CVBA', 'Stair Shuffle made easy…ish 𓊍', args, message)
+        await self.roll3juef('KVIAIVCEKECBAAAAAEAAAUIUIAQBAAIFABYOCVBA', 'Stair Shuffle made easy…ish 𓊍', args, message)
 
     async def ex_week6(self, args, message):
         """
@@ -259,7 +259,7 @@ class RandoHandler(RaceHandler):
         """
         # WL2025
         # await self.roll3nonstandard('IVIAAVCAKACBAACVCQAAAEJE', 'You No Nothing, Jon Snow', args, message)
-        await self.roll3juef('UVUEQ2CAVKUBFAAAFIAABWQUAAQBAAAAABYKCAAA', 'Kitchen Sink v2026 🚮', args, message)
+        await self.roll3juef('QVUEQ2CAVKUBFAAAFIAABWQUAAQBAAAAABYKCAAA', 'Kitchen Sink v2026 🚮', args, message)
 
     async def ex_week8b(self, args, message):
         """
@@ -267,7 +267,7 @@ class RandoHandler(RaceHandler):
         """
         # WL2025
         # await self.roll3nonstandard('KVIUIVCEKVABAAAAKEAAAEJU', 'Kitchen Sink!', args, message)
-        await self.roll3juef('KVIQAVCAKUCBAAAVAAAAAYAUABQABSCAABYSCAFB', '🎵 J’suis plus sensible à l’invisible  🎶', args, message)
+        await self.roll3juef('KVIQAVCAKUCBAAAVAAAAAYAUABQAASCAABYSCAFB', '🎵 J’suis plus sensible à l’invisible  🎶', args, message)
 
     async def roll3nonstandard(self, setflags, weekmsg, args, message):
         """
