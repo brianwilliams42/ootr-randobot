@@ -6,7 +6,7 @@ SEED_MIN = 1_000_000_000_000
 SEED_MAX = 9_999_999_999_999
 
 current_mcgrew_version = "v3.0.3"
-current_juef_version = "v3.0.3.20"
+current_juef_version = "juef-v3.0.3.20"
 
 class RandoHandler(RaceHandler):
     """
