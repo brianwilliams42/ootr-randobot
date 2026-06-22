@@ -27,7 +27,7 @@ class RandoHandler(RaceHandler):
             goal_name = self.data.get('goal', {}).get('name')
             if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
                 await self.send_message(
-                    'Welcome to DWR! Create a standard seed with !roll or !summer for 2025 Summer Tournament Edition'
+                    'Welcome to DWR! Create a standard seed with !roll or !summer for 2026 Summer Tournament Edition'
                 )
             else:
                 await self.send_message(
@@ -165,7 +165,7 @@ class RandoHandler(RaceHandler):
 
     async def ex_summer(self, args, message):
         """
-        Rolls a new seed with the room default flags for 2025 Summer Tournament Edition.
+        Rolls a new seed with the room default flags for 2026 Summer Tournament Edition.
         """
         reply_to = message.get('user', {}).get('name')
         if self._race_in_progress():
