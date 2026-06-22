@@ -172,7 +172,7 @@ class RandoHandler(RaceHandler):
             return
         goal_name = self.data.get('goal', {}).get('name')
         if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
-            self.state['race_version'] = 'v3.0.4-b704'
+            self.state['race_version'] = 'v3.0.4-b701'
             self.state['build_type'] = 'beta'
             await self.roll(
                 flags="IVIAAVCFKACAAAAAAAAAAEAQ",
