@@ -181,6 +181,25 @@ class RandoHandler(RaceHandler):
         else:
             await self.send_message('This command only works in Standard and Tournament')
 
+    async def ex_summerflags(self, args, message):
+        """
+        Rolls a new seed with the room custom flags for 2026 Summer Tournament Edition.
+        """
+        reply_to = message.get('user', {}).get('name')
+        if self._race_in_progress():
+            return
+        goal_name = self.data.get('goal', {}).get('name')
+        if (goal_name == 'Standard Flags' or goal_name == 'Tournament'):
+            self.state['race_version'] = 'v3.0.4-b701'
+            self.state['build_type'] = 'beta'
+            words = message.get('message', '').split(' ')
+            await self.roll(
+                flags="words[1]",
+                reply_to=reply_to,
+            )
+        else:
+            await self.send_message('This command only works in Standard and Tournament')
+
     async def ex_juef(self, args, message):
         """
         Rolls a new seed with the provided flags for a juef-build race.
