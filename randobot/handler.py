@@ -194,7 +194,7 @@ class RandoHandler(RaceHandler):
             self.state['build_type'] = 'beta'
             words = message.get('message', '').split(' ')
             await self.roll(
-                flags="words[1]",
+                flags=words[1],
                 reply_to=reply_to,
             )
         else:
